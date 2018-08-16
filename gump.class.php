@@ -603,9 +603,11 @@ class GUMP
      *
      * @param $convert_to_string
      *
+     * @param bool $rename_field
      * @return array | null (if empty)
+     * @throws Exception
      */
-    public function get_errors_array($convert_to_string = null)
+    public function get_errors_array($convert_to_string = null, $rename_field = true)
     {
         if (empty($this->errors)) {
             return ($convert_to_string) ? null : array();
@@ -618,7 +620,7 @@ class GUMP
 
         foreach ($this->errors as $e)
         {
-            $field = ucwords(str_replace(array('_', '-'), chr(32), $e['field']));
+            $field = ($rename_field) ? ucwords(str_replace(array('_', '-'), chr(32), $e['field'])) : $e['field'];
             $param = $e['param'];
 
             // Let's fetch explicitly if the field names exist
